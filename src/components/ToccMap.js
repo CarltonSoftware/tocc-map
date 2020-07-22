@@ -5,6 +5,10 @@ import '../scss/ResponsiveEmbed.scss';
 
 class ToccMapItem extends React.Component {
   render() {
+    if (!this.props.content.modal) {
+      return null;
+    }
+
     return (
       <div className="toccmap__item" onClick={ this.props.onClick } style={ { left: this.props.coords.x, top: this.props.coords.y } }>
         <i>{ this.props.content.icon }</i>
