@@ -6,9 +6,42 @@
   position: relative;
   margin: 0 auto;
 
+  &:before {
+    background-repeat: no-repeat;
+    height: 1192px;
+    width: 1800px;
+    content: "";
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: linear;
+  }
+
+  &--Christmas {
+    &:before {
+      background: url('/img/Christmas.png');
+      opacity: 1;
+    }
+  }
+
+  &.oc-loaded {
+    .toccmap__item {
+      opacity: 1;
+    }
+  }
+
   &__item {
     position: absolute;
     cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: linear;
+    transition-delay: 0.5s;
 
     &:after {
       content: "";
@@ -66,4 +99,10 @@ body {
   background-color: #C7DDEB;
   margin: 0;
   padding: 0;
+}
+
+.oc-overlay__container--embed .oc-overlay__close {
+  &:after {
+    color: white;
+  }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import '../scss/ToccMap.scss';
-import '../scss/Loader.scss';
 import '../scss/ResponsiveEmbed.scss';
 
 class ToccMapItem extends React.Component {
@@ -25,6 +24,7 @@ class ToccMapOverlay extends React.Component {
 
     let content = "";
     let styleOverride = {};
+    let overlayClassNames = ['oc-overlay__container'];
     let buttonOverride = {
       cursor: 'pointer'
     };
@@ -45,10 +45,10 @@ class ToccMapOverlay extends React.Component {
         styleOverride = {
           background: 'none'
         };
-        buttonOverride.color = 'white';
+        overlayClassNames.push('oc-overlay__container--embed');
         content = (
           <div className="oc-responsive-embed">
-            <iframe src={ this.props.data.content.modal } title={ this.props.data.content.icon } />
+            <iframe src={ this.props.data.content.modal } title={ this.props.data.content.icon }><p className="oc-white">Loading</p></iframe>
           </div>
         );
       } else if (isHTML(this.props.data.content.modal)) {
@@ -71,7 +71,7 @@ class ToccMapOverlay extends React.Component {
     }
     return (
       <div {...props}>
-        <div className="oc-overlay__container" style={ styleOverride }>
+        <div className={ overlayClassNames.join(' ') } style={ styleOverride }>
           <button className="oc-overlay__close" onClick={ this.props.onClose } style={ buttonOverride } />
           { content }
         </div>
@@ -86,6 +86,7 @@ class ToccMap extends React.Component {
 
     this.state = {
       loading: true,
+      loaded: false,
       data: [],
       theme: 'Default',
       modalItem: false
@@ -102,7 +103,7 @@ class ToccMap extends React.Component {
       }).then((res) => {
         return res.json();
       }).then((json) => {
-        this.setState({ data: json.data, theme: json.theme, loading: false });
+        this.setState({ data: json.data, theme: json.theme, loading: false, loaded: true });
       });
     });
   }
@@ -126,7 +127,11 @@ class ToccMap extends React.Component {
   render() {
     let classNames = ['toccmap'];
     if (this.state.loading) {
-      classNames.push('loading');
+      classNames.push('oc-loading');
+    }
+    if (this.state.loaded) {
+      classNames.push('toccmap--' + this.state.theme);
+      classNames.push('oc-loaded');
     }
 
     let overlayProps = {
