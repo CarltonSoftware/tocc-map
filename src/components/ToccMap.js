@@ -144,6 +144,7 @@ class ToccMap extends React.Component {
 
     return (
       <div className={ classNames.join(' ') }>
+        <div className="toccmap__inner" />
         { this.getMapItems() }
         <ToccMapOverlay {...overlayProps} data={ this.state.modalItem } />
       </div>

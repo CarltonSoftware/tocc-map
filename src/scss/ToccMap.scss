@@ -27,6 +27,47 @@
     }
   }
 
+  $heart-size: 150px;
+  $heart-colour: #ce0404;
+
+  &--Heart {
+    .toccmap__inner {
+      animation: heartbeat 1s infinite;
+      background-color: $heart-colour;
+      display: inline-block;
+      height: $heart-size;
+      margin: 0 10px;
+      position: relative;
+      top: 0;
+      transform: rotate(-45deg);
+      position: absolute;
+      left: 55%;
+      top: 45%;
+      width: $heart-size;
+      opacity: 0.9;
+    }
+
+    .toccmap__inner:before,
+    .toccmap__inner:after {
+      content: "";
+      background-color: $heart-colour;
+      border-radius: 50%;
+      height: $heart-size;
+      position: absolute;
+      width: $heart-size;
+    }
+
+    .toccmap__inner:before {
+      top: ($heart-size / 2) * -1;
+      left: 0;
+    }
+
+    .toccmap__inner:after {
+      left: ($heart-size / 2);
+      top: 0;
+    }
+  }
+
   &.oc-loaded {
     .toccmap__item {
       opacity: 1;
@@ -104,5 +145,23 @@ body {
 .oc-overlay__container--embed .oc-overlay__close {
   &:after {
     color: white;
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: rotate(-45deg) scale(1);
+  }
+  25% {
+    transform: rotate(-45deg) scale(1.1);
+  }
+  40% {
+    transform: rotate(-45deg) scale(1);
+  }
+  60% {
+    transform: rotate(-45deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(-45deg) scale(1);
   }
 }
