@@ -1,6 +1,7 @@
 import React from 'react';
 import '../scss/ToccMap.scss';
 import '../scss/ResponsiveEmbed.scss';
+import Konami from 'react-konami-code';
 
 class ToccMapItem extends React.Component {
   render() {
@@ -124,6 +125,14 @@ class ToccMap extends React.Component {
     this.setState({ modalItem: false });
   }
 
+  barrelRole() {
+    var body = document.body;
+    body.classList.add('barrel-roll');
+    setTimeout(() => {
+      body.classList.remove('barrel-roll');
+    }, 4000);
+  }
+
   render() {
     let classNames = ['toccmap'];
     if (this.state.loading) {
@@ -143,11 +152,14 @@ class ToccMap extends React.Component {
     }
 
     return (
-      <div className={ classNames.join(' ') }>
-        <div className="toccmap__inner" />
-        { this.getMapItems() }
-        <ToccMapOverlay {...overlayProps} data={ this.state.modalItem } />
-      </div>
+      <React.Fragment>
+        <div className={ classNames.join(' ') }>
+          <div className="toccmap__inner" />
+          { this.getMapItems() }
+          <ToccMapOverlay {...overlayProps} data={ this.state.modalItem } />
+        </div>
+        <Konami action={ this.barrelRole } code={ [38,40,37,39] } timeout={ 1000 } />
+      </React.Fragment>
     );
   }
 }
